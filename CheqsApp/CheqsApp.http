@@ -1,0 +1,6 @@
+@CheqsApp_HostAddress = http://localhost:5134
+
+GET {{CheqsApp_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
