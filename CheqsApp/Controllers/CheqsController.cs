@@ -101,6 +101,27 @@ namespace CheqsApp.Controllers
             return NoContent();
         }
 
+        [HttpDelete]
+        public async Task<IActionResult> DeleteCheqs([FromBody] int[] ids)
+        {
+            if (ids == null || ids.Length == 0)
+            {
+                return BadRequest("No se proporcionaron IDs.");
+            }
+
+            var cheqs = await _context.Cheqs.Where(cheq => ids.Contains(cheq.Id)).ToListAsync();
+
+            if (cheqs.Count == 0)
+            {
+                return NotFound("No se encontraron cheques con los IDs proporcionados.");
+            }
+
+            _context.Cheqs.RemoveRange(cheqs);
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
+
         private bool CheqExists(int id)
         {
             return _context.Cheqs.Any(e => e.Id == id);
