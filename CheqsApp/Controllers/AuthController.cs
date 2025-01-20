@@ -86,7 +86,12 @@ namespace CheqsApp.Controllers
             var token = GenerateJwtToken(user);
 
             // Devolver el token
-            return Ok(new { Token = token });
+            return Ok(new { 
+                Token = token, 
+                user.Username,  
+                user.Email,
+                Rol = user.Role.ToString(),
+            });
         }
 
 
