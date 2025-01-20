@@ -89,32 +89,33 @@ namespace CheqsApp.Migrations
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
                 name: "BusinessUser",
                 columns: table => new
                 {
-                    UserId = table.Column<int>(type: "int", nullable: false),
-                    BusinessId = table.Column<int>(type: "int", nullable: false),
                     Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    BusinessId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_BusinessUser", x => new { x.BusinessId, x.UserId });
+                    table.PrimaryKey("PK_BusinessUser", x => x.Id);
                     table.ForeignKey(
                         name: "FK_BusinessUser_Businesses_BusinessId",
                         column: x => x.BusinessId,
                         principalTable: "Businesses",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_BusinessUser_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -131,18 +132,16 @@ namespace CheqsApp.Migrations
                     DueDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     BusinessUserId = table.Column<int>(type: "int", nullable: false),
-                    BusinessUserBusinessId = table.Column<int>(type: "int", nullable: false),
-                    BusinessUserUserId = table.Column<int>(type: "int", nullable: false),
                     Amount = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Cheqs", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Cheqs_BusinessUser_BusinessUserBusinessId_BusinessUserUserId",
-                        columns: x => new { x.BusinessUserBusinessId, x.BusinessUserUserId },
+                        name: "FK_Cheqs_BusinessUser_BusinessUserId",
+                        column: x => x.BusinessUserId,
                         principalTable: "BusinessUser",
-                        principalColumns: new[] { "BusinessId", "UserId" },
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Cheqs_Entities_EntityId",
@@ -170,14 +169,19 @@ namespace CheqsApp.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_BusinessUser_BusinessId",
+                table: "BusinessUser",
+                column: "BusinessId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_BusinessUser_UserId",
                 table: "BusinessUser",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Cheqs_BusinessUserBusinessId_BusinessUserUserId",
+                name: "IX_Cheqs_BusinessUserId",
                 table: "Cheqs",
-                columns: new[] { "BusinessUserBusinessId", "BusinessUserUserId" });
+                column: "BusinessUserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Cheqs_EntityId",

@@ -55,16 +55,21 @@ namespace CheqsApp.Migrations
 
             modelBuilder.Entity("CheqsApp.Models.BusinessUser", b =>
                 {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
                     b.Property<int>("BusinessId")
                         .HasColumnType("int");
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
-                    b.Property<int>("Id")
-                        .HasColumnType("int");
+                    b.HasKey("Id");
 
-                    b.HasKey("BusinessId", "UserId");
+                    b.HasIndex("BusinessId");
 
                     b.HasIndex("UserId");
 
@@ -82,13 +87,7 @@ namespace CheqsApp.Migrations
                     b.Property<decimal>("Amount")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int>("BusinessUserBusinessId")
-                        .HasColumnType("int");
-
                     b.Property<int>("BusinessUserId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("BusinessUserUserId")
                         .HasColumnType("int");
 
                     b.Property<string>("CheqNumber")
@@ -115,13 +114,13 @@ namespace CheqsApp.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("BusinessUserId");
+
                     b.HasIndex("EntityId");
 
                     b.HasIndex("StateId");
 
                     b.HasIndex("TypeId");
-
-                    b.HasIndex("BusinessUserBusinessId", "BusinessUserUserId");
 
                     b.ToTable("Cheqs");
                 });
@@ -219,7 +218,7 @@ namespace CheqsApp.Migrations
                     b.HasOne("CheqsApp.Models.User", "User")
                         .WithMany("CreatedBusinesses")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("User");
@@ -230,13 +229,13 @@ namespace CheqsApp.Migrations
                     b.HasOne("CheqsApp.Models.Business", "Business")
                         .WithMany("BusinessUsers")
                         .HasForeignKey("BusinessId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("CheqsApp.Models.User", "User")
                         .WithMany("BusinessUsers")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Business");
@@ -246,6 +245,12 @@ namespace CheqsApp.Migrations
 
             modelBuilder.Entity("CheqsApp.Models.Cheq", b =>
                 {
+                    b.HasOne("CheqsApp.Models.BusinessUser", "BusinessUser")
+                        .WithMany()
+                        .HasForeignKey("BusinessUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("CheqsApp.Models.Entity", "Entity")
                         .WithMany("Cheqs")
                         .HasForeignKey("EntityId")
@@ -261,12 +266,6 @@ namespace CheqsApp.Migrations
                     b.HasOne("CheqsApp.Models.Type", "Type")
                         .WithMany("Cheqs")
                         .HasForeignKey("TypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("CheqsApp.Models.BusinessUser", "BusinessUser")
-                        .WithMany()
-                        .HasForeignKey("BusinessUserBusinessId", "BusinessUserUserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

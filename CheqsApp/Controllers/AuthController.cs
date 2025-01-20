@@ -1,6 +1,7 @@
 ﻿using CheqsApp.Contexts;
 using CheqsApp.DTO;
 using CheqsApp.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -45,7 +46,7 @@ namespace CheqsApp.Controllers
                 Username = model.Username,
                 Email = model.Email,
                 Role = UserRole.User, // Puedes ajustar esto según lo que necesites
-                CreatedAt = DateTime.UtcNow,
+                CreatedAt = DateTime.Now,
                 IsActive = true
             };
 
@@ -60,6 +61,73 @@ namespace CheqsApp.Controllers
 
             // Responder con el token
             return Ok(new { Token = token });
+        }
+
+        // POST: api/auth/login
+        [HttpPost("login")]
+        public async Task<IActionResult> Login([FromBody] LoginModelDTO model)
+        {
+            // Buscar al usuario en la base de datos
+            var user = await _context.Users
+                .FirstOrDefaultAsync(u => u.Username == model.Username);
+
+            if (user == null)
+            {
+                return Unauthorized("Nombre de usuario o contraseña incorrectos.");
+            }
+
+            // Verificar la contraseña
+            if (!VerifyPassword(model.Password, user.PasswordHash))
+            {
+                return Unauthorized("Nombre de usuario o contraseña incorrectos.");
+            }
+
+            // Generar el token JWT
+            var token = GenerateJwtToken(user);
+
+            // Devolver el token
+            return Ok(new { Token = token });
+        }
+
+
+        // POST: api/auth/change-password
+        [HttpPost("change-password")]
+        [Authorize]  // Esto requiere que el usuario esté autenticado
+        public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordDTO model)
+        {
+            // Obtener el nombre de usuario del usuario autenticado
+            var username = User.Identity?.Name;
+
+            // Buscar al usuario en la base de datos
+            var user = await _context.Users
+                .FirstOrDefaultAsync(u => u.Username == username);
+
+            if (user == null)
+            {
+                return NotFound("Usuario no encontrado.");
+            }
+
+            // Verificar la contraseña actual
+            if (!VerifyPassword(model.CurrentPassword, user.PasswordHash))
+            {
+                return Unauthorized("La contraseña actual es incorrecta.");
+            }
+
+            // Validar que la nueva contraseña cumpla con los requisitos de seguridad, si es necesario
+
+            // Actualizar la contraseña
+            user.PasswordHash = HashPassword(model.NewPassword);
+            _context.Users.Update(user);
+            await _context.SaveChangesAsync();
+
+            return Ok("Contraseña actualizada exitosamente.");
+        }
+
+        // Método para verificar si la contraseña coincide con el hash
+        private bool VerifyPassword(string password, string storedHash)
+        {
+            var hash = HashPassword(password);
+            return hash == storedHash;
         }
 
         private string HashPassword(string password)
