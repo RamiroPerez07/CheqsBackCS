@@ -1,12 +1,105 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "C:\\Users\\HP\\Desktop\\Cheques\\Backend\\CheqsApp\\",
-  "Documents": [],
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{1EE01DC2-1E90-48FC-82FF-4DE35D99FE6B}|CheqsApp\\CheqsApp.csproj|c:\\users\\hp\\desktop\\cheques\\backend\\cheqsapp\\cheqsapp\\models\\business.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1EE01DC2-1E90-48FC-82FF-4DE35D99FE6B}|CheqsApp\\CheqsApp.csproj|solutionrelative:cheqsapp\\models\\business.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1EE01DC2-1E90-48FC-82FF-4DE35D99FE6B}|CheqsApp\\CheqsApp.csproj|c:\\users\\hp\\desktop\\cheques\\backend\\cheqsapp\\cheqsapp\\models\\businessuser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1EE01DC2-1E90-48FC-82FF-4DE35D99FE6B}|CheqsApp\\CheqsApp.csproj|solutionrelative:cheqsapp\\models\\businessuser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1EE01DC2-1E90-48FC-82FF-4DE35D99FE6B}|CheqsApp\\CheqsApp.csproj|c:\\users\\hp\\desktop\\cheques\\backend\\cheqsapp\\cheqsapp\\models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1EE01DC2-1E90-48FC-82FF-4DE35D99FE6B}|CheqsApp\\CheqsApp.csproj|solutionrelative:cheqsapp\\models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1EE01DC2-1E90-48FC-82FF-4DE35D99FE6B}|CheqsApp\\CheqsApp.csproj|c:\\users\\hp\\desktop\\cheques\\backend\\cheqsapp\\cheqsapp\\contexts\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1EE01DC2-1E90-48FC-82FF-4DE35D99FE6B}|CheqsApp\\CheqsApp.csproj|solutionrelative:cheqsapp\\contexts\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\HP\\Desktop\\Cheques\\Backend\\CheqsApp\\CheqsApp\\Migrations\\20250119155133_Initial.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:CheqsApp\\Migrations\\20250119155133_Initial.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
       "VerticalTabListWidth": 256,
-      "DocumentGroups": []
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 2,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "User.cs",
+              "DocumentMoniker": "C:\\Users\\HP\\Desktop\\Cheques\\Backend\\CheqsApp\\CheqsApp\\Models\\User.cs",
+              "RelativeDocumentMoniker": "CheqsApp\\Models\\User.cs",
+              "ToolTip": "C:\\Users\\HP\\Desktop\\Cheques\\Backend\\CheqsApp\\CheqsApp\\Models\\User.cs",
+              "RelativeToolTip": "CheqsApp\\Models\\User.cs",
+              "ViewState": "AQIAAB4AAAAAAAAAAAA1wCkAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-20T03:14:14.888Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "AppDBContext.cs",
+              "DocumentMoniker": "C:\\Users\\HP\\Desktop\\Cheques\\Backend\\CheqsApp\\CheqsApp\\Contexts\\AppDBContext.cs",
+              "RelativeDocumentMoniker": "CheqsApp\\Contexts\\AppDBContext.cs",
+              "ToolTip": "C:\\Users\\HP\\Desktop\\Cheques\\Backend\\CheqsApp\\CheqsApp\\Contexts\\AppDBContext.cs",
+              "RelativeToolTip": "CheqsApp\\Contexts\\AppDBContext.cs",
+              "ViewState": "AQIAABEAAAAAAAAAAAAAABgAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-20T03:13:46.628Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Business.cs",
+              "DocumentMoniker": "C:\\Users\\HP\\Desktop\\Cheques\\Backend\\CheqsApp\\CheqsApp\\Models\\Business.cs",
+              "RelativeDocumentMoniker": "CheqsApp\\Models\\Business.cs",
+              "ToolTip": "C:\\Users\\HP\\Desktop\\Cheques\\Backend\\CheqsApp\\CheqsApp\\Models\\Business.cs",
+              "RelativeToolTip": "CheqsApp\\Models\\Business.cs",
+              "ViewState": "AQIAAA8AAAAAAAAAAAAQwBEAAAA/AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-20T03:12:37.437Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "BusinessUser.cs",
+              "DocumentMoniker": "C:\\Users\\HP\\Desktop\\Cheques\\Backend\\CheqsApp\\CheqsApp\\Models\\BusinessUser.cs",
+              "RelativeDocumentMoniker": "CheqsApp\\Models\\BusinessUser.cs",
+              "ToolTip": "C:\\Users\\HP\\Desktop\\Cheques\\Backend\\CheqsApp\\CheqsApp\\Models\\BusinessUser.cs",
+              "RelativeToolTip": "CheqsApp\\Models\\BusinessUser.cs",
+              "ViewState": "AQIAAAgAAAAAAAAAAAAQwBIAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-20T03:12:28.774Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "20250119155133_Initial.cs",
+              "DocumentMoniker": "C:\\Users\\HP\\Desktop\\Cheques\\Backend\\CheqsApp\\CheqsApp\\Migrations\\20250119155133_Initial.cs",
+              "RelativeDocumentMoniker": "CheqsApp\\Migrations\\20250119155133_Initial.cs",
+              "ToolTip": "C:\\Users\\HP\\Desktop\\Cheques\\Backend\\CheqsApp\\CheqsApp\\Migrations\\20250119155133_Initial.cs",
+              "RelativeToolTip": "CheqsApp\\Migrations\\20250119155133_Initial.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-19T15:51:33.74Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
     }
   ]
 }

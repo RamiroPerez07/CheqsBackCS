@@ -170,5 +170,50 @@ namespace CheqsApp.Controllers
 
             return Ok(result);
         }
+
+        public class ChangeCheqsStateRequest
+        {
+            public required List<int> CheqIds { get; set; }
+            public int NewStateId { get; set; }
+        }
+
+        // PUT: api/Cheqs/ChangeStateId
+        [HttpPut("ChangeStateId")]
+        public async Task<IActionResult> ChangeCheqsStateId([FromBody] ChangeCheqsStateRequest request)
+        {
+            // Verifica si los cheques existen
+            var cheqs = await _context.Cheqs.Where(c => request.CheqIds.Contains(c.Id)).ToListAsync();
+            if (cheqs.Count != request.CheqIds.Count)
+            {
+                return NotFound("Uno o más cheques no encontrados.");
+            }
+
+            // Verifica si el nuevo StateId es válido
+            var stateExists = await _context.States.AnyAsync(s => s.Id == request.NewStateId);
+            if (!stateExists)
+            {
+                return BadRequest("El nuevo StateId no existe.");
+            }
+
+            // Cambia el StateId de los cheques
+            foreach (var cheq in cheqs)
+            {
+                cheq.StateId = request.NewStateId;
+                _context.Entry(cheq).State = EntityState.Modified;
+            }
+
+            // Guarda los cambios en la base de datos
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                throw;
+            }
+
+            return NoContent();
+        }
     }
+
 }

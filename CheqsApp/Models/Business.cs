@@ -10,5 +10,16 @@ namespace CheqsApp.Models
 
         [Column(TypeName = "decimal(18,2)")]
         public decimal Balance { get; set; }
+
+        public int UserId { get; set; }
+
+        public User? User { get; set; }
+
+        public DateTime CreatedAt { get; set; } = DateTime.Now;
+
+        public DateTime? LastUpdatedAt { get; set;} = DateTime.Now;
+
+        // Relación con BusinessUser (usuarios que ven la empresa)
+        public ICollection<BusinessUser> BusinessUsers { get; set; } = new List<BusinessUser>();
     }
 }

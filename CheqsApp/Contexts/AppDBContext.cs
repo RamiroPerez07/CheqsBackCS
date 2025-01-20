@@ -23,7 +23,7 @@ namespace CheqsApp.Contexts
         public DbSet<BusinessUser> BusinessUser { get; set; }
 
 
-
-
     }
+
 }
+

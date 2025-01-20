@@ -12,20 +12,6 @@ namespace CheqsApp.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Business",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    BusinessName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Balance = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Business", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Entities",
                 columns: table => new
                 {
@@ -65,7 +51,7 @@ namespace CheqsApp.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "User",
+                name: "Users",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -73,35 +59,60 @@ namespace CheqsApp.Migrations
                     Username = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Role = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Role = table.Column<int>(type: "int", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_User", x => x.Id);
+                    table.PrimaryKey("PK_Users", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Businesses",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    BusinessName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Balance = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    LastUpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Businesses", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Businesses_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
                 name: "BusinessUser",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
                     UserId = table.Column<int>(type: "int", nullable: false),
-                    BusinessId = table.Column<int>(type: "int", nullable: false)
+                    BusinessId = table.Column<int>(type: "int", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_BusinessUser", x => x.Id);
+                    table.PrimaryKey("PK_BusinessUser", x => new { x.BusinessId, x.UserId });
                     table.ForeignKey(
-                        name: "FK_BusinessUser_Business_BusinessId",
+                        name: "FK_BusinessUser_Businesses_BusinessId",
                         column: x => x.BusinessId,
-                        principalTable: "Business",
+                        principalTable: "Businesses",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_BusinessUser_User_UserId",
+                        name: "FK_BusinessUser_Users_UserId",
                         column: x => x.UserId,
-                        principalTable: "User",
+                        principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -120,16 +131,18 @@ namespace CheqsApp.Migrations
                     DueDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     BusinessUserId = table.Column<int>(type: "int", nullable: false),
+                    BusinessUserBusinessId = table.Column<int>(type: "int", nullable: false),
+                    BusinessUserUserId = table.Column<int>(type: "int", nullable: false),
                     Amount = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Cheqs", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Cheqs_BusinessUser_BusinessUserId",
-                        column: x => x.BusinessUserId,
+                        name: "FK_Cheqs_BusinessUser_BusinessUserBusinessId_BusinessUserUserId",
+                        columns: x => new { x.BusinessUserBusinessId, x.BusinessUserUserId },
                         principalTable: "BusinessUser",
-                        principalColumn: "Id",
+                        principalColumns: new[] { "BusinessId", "UserId" },
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Cheqs_Entities_EntityId",
@@ -152,9 +165,9 @@ namespace CheqsApp.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_BusinessUser_BusinessId",
-                table: "BusinessUser",
-                column: "BusinessId");
+                name: "IX_Businesses_UserId",
+                table: "Businesses",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_BusinessUser_UserId",
@@ -162,9 +175,9 @@ namespace CheqsApp.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Cheqs_BusinessUserId",
+                name: "IX_Cheqs_BusinessUserBusinessId_BusinessUserUserId",
                 table: "Cheqs",
-                column: "BusinessUserId");
+                columns: new[] { "BusinessUserBusinessId", "BusinessUserUserId" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Cheqs_EntityId",
@@ -201,10 +214,10 @@ namespace CheqsApp.Migrations
                 name: "Types");
 
             migrationBuilder.DropTable(
-                name: "Business");
+                name: "Businesses");
 
             migrationBuilder.DropTable(
-                name: "User");
+                name: "Users");
         }
     }
 }
