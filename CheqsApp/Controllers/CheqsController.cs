@@ -127,9 +127,9 @@ namespace CheqsApp.Controllers
             return _context.Cheqs.Any(e => e.Id == id);
         }
 
-        
+
         [HttpGet("getCheqsWithDetails")]
-        public async Task<ActionResult<IEnumerable<CheqDetail>>> GetCheqsWithDetails()
+        public async Task<ActionResult<IEnumerable<CheqDetail>>> GetCheqsWithDetails([FromQuery] int userId, [FromQuery] int bankId, [FromQuery] int businessId)
         {
             var query = from ch in _context.Cheqs
                         join bbu in _context.BankBusinessUsers on ch.BankBusinessUserId equals bbu.Id into bbuGroup
@@ -148,6 +148,7 @@ namespace CheqsApp.Controllers
                         from s in sGroup.DefaultIfEmpty()
                         join e in _context.Entities on ch.EntityId equals e.Id into eGroup
                         from e in eGroup.DefaultIfEmpty()
+                        where u.Id == userId && b.Id == bankId && bus.Id == businessId
                         select new
                         {
                             CheqId = ch.Id,
@@ -176,7 +177,7 @@ namespace CheqsApp.Controllers
 
             return Ok(result);
         }
-        
+
 
         public class ChangeCheqsStateRequest
         {

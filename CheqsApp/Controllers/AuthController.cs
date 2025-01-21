@@ -88,6 +88,7 @@ namespace CheqsApp.Controllers
             // Devolver el token
             return Ok(new { 
                 Token = token, 
+                UserId = user.Id,
                 user.Username,  
                 user.Email,
                 Rol = user.Role.ToString(),
