@@ -25,8 +25,8 @@ namespace CheqsApp.Models
 
         public DateTime CreatedAt { get; set; } = DateTime.Now;
 
-        public int BusinessUserId { get; set; }
-        public BusinessUser? BusinessUser { get; set; }
+        public int BankBusinessUserId { get; set; }
+        public BankBusinessUser? BankBusinessUser { get; set; }
 
         [Column(TypeName = "decimal(18,2)")]
         public decimal Amount { get; set; }

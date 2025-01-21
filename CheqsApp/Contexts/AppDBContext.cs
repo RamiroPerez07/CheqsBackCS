@@ -20,7 +20,12 @@ namespace CheqsApp.Contexts
 
         public DbSet<Business> Businesses { get; set; }
 
-        public DbSet<BusinessUser> BusinessUser { get; set; }
+        public DbSet<Bank> Banks { get; set; }
+
+        public DbSet<BankBusiness> BankBusinesses { get; set; }
+
+        public DbSet<BankBusinessUser> BankBusinessUsers { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -29,22 +34,34 @@ namespace CheqsApp.Contexts
             // Configuración de la relación entre User y Business
             modelBuilder.Entity<Business>()
                 .HasOne(b => b.User)  // Relación con el User (quién creó el negocio)
-                .WithMany(u => u.CreatedBusinesses)  // Relación inversa (un User tiene varios negocios)
-                .HasForeignKey(b => b.UserId)  // Clave foránea
-                .OnDelete(DeleteBehavior.Restrict);  // Configura la eliminación en cascada (cuando se elimine un User, se eliminan sus Business)
+                .WithMany(u => u.CreatedBusinesses)  
+                .HasForeignKey(b => b.UserId)
+                .OnDelete(DeleteBehavior.Restrict);  
 
             // Configuración de la relación entre Business y BusinessUser
-            modelBuilder.Entity<BusinessUser>()
-                .HasOne(bu => bu.User)  // Relación con el User
-                .WithMany(u => u.BusinessUsers)  // Relación inversa (un User puede ver varios negocios)
-                .HasForeignKey(bu => bu.UserId)
-                .OnDelete(DeleteBehavior.Restrict);  // Configura la eliminación en cascada (eliminar BusinessUser cuando se elimine un User)
+            modelBuilder.Entity<BankBusiness>()
+                .HasOne(bb => bb.Bank)  // Relación con el Bank
+                .WithMany(u => u.BankBusinesses)  
+                .HasForeignKey(bu => bu.BankId)
+                .OnDelete(DeleteBehavior.Restrict);  
 
-            modelBuilder.Entity<BusinessUser>()
+            modelBuilder.Entity<BankBusiness>()
                 .HasOne(bu => bu.Business)  // Relación con el Business
-                .WithMany(b => b.BusinessUsers)  // Relación inversa (un Business puede ser visto por varios usuarios)
+                .WithMany(b => b.BankBusinesses)  // Relación inversa (un Business puede ser visto por varios usuarios)
                 .HasForeignKey(bu => bu.BusinessId)
-                .OnDelete(DeleteBehavior.Restrict);  // Configura la eliminación en cascada (eliminar BusinessUser cuando se elimine un Business)
+                .OnDelete(DeleteBehavior.Restrict); 
+
+            modelBuilder.Entity<BankBusinessUser>()
+                .HasOne(bu => bu.User)
+                .WithMany(b => b.BankBusinessUsers)
+                .HasForeignKey(bu => bu.UserId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<BankBusinessUser>()
+                .HasOne(bu => bu.BankBusiness)
+                .WithMany(b => b.BankBusinessUsers)
+                .HasForeignKey(bu => bu.BankBusinessId)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 

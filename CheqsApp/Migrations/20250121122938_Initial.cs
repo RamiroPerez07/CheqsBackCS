@@ -12,6 +12,19 @@ namespace CheqsApp.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "Banks",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    BankName = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Banks", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Entities",
                 columns: table => new
                 {
@@ -76,7 +89,6 @@ namespace CheqsApp.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     BusinessName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Balance = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     UserId = table.Column<int>(type: "int", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     LastUpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
@@ -93,25 +105,53 @@ namespace CheqsApp.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "BusinessUser",
+                name: "BankBusinesses",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    BankId = table.Column<int>(type: "int", nullable: false),
+                    BusinessId = table.Column<int>(type: "int", nullable: false),
+                    Balance = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BankBusinesses", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_BankBusinesses_Banks_BankId",
+                        column: x => x.BankId,
+                        principalTable: "Banks",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_BankBusinesses_Businesses_BusinessId",
+                        column: x => x.BusinessId,
+                        principalTable: "Businesses",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "BankBusinessUsers",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserId = table.Column<int>(type: "int", nullable: false),
-                    BusinessId = table.Column<int>(type: "int", nullable: false)
+                    BankBusinessId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_BusinessUser", x => x.Id);
+                    table.PrimaryKey("PK_BankBusinessUsers", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_BusinessUser_Businesses_BusinessId",
-                        column: x => x.BusinessId,
-                        principalTable: "Businesses",
+                        name: "FK_BankBusinessUsers_BankBusinesses_BankBusinessId",
+                        column: x => x.BankBusinessId,
+                        principalTable: "BankBusinesses",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_BusinessUser_Users_UserId",
+                        name: "FK_BankBusinessUsers_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id",
@@ -131,16 +171,16 @@ namespace CheqsApp.Migrations
                     IssueDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DueDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    BusinessUserId = table.Column<int>(type: "int", nullable: false),
+                    BankBusinessUserId = table.Column<int>(type: "int", nullable: false),
                     Amount = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Cheqs", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Cheqs_BusinessUser_BusinessUserId",
-                        column: x => x.BusinessUserId,
-                        principalTable: "BusinessUser",
+                        name: "FK_Cheqs_BankBusinessUsers_BankBusinessUserId",
+                        column: x => x.BankBusinessUserId,
+                        principalTable: "BankBusinessUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -164,24 +204,34 @@ namespace CheqsApp.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_BankBusinesses_BankId",
+                table: "BankBusinesses",
+                column: "BankId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_BankBusinesses_BusinessId",
+                table: "BankBusinesses",
+                column: "BusinessId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_BankBusinessUsers_BankBusinessId",
+                table: "BankBusinessUsers",
+                column: "BankBusinessId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_BankBusinessUsers_UserId",
+                table: "BankBusinessUsers",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Businesses_UserId",
                 table: "Businesses",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_BusinessUser_BusinessId",
-                table: "BusinessUser",
-                column: "BusinessId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_BusinessUser_UserId",
-                table: "BusinessUser",
-                column: "UserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Cheqs_BusinessUserId",
+                name: "IX_Cheqs_BankBusinessUserId",
                 table: "Cheqs",
-                column: "BusinessUserId");
+                column: "BankBusinessUserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Cheqs_EntityId",
@@ -206,7 +256,7 @@ namespace CheqsApp.Migrations
                 name: "Cheqs");
 
             migrationBuilder.DropTable(
-                name: "BusinessUser");
+                name: "BankBusinessUsers");
 
             migrationBuilder.DropTable(
                 name: "Entities");
@@ -216,6 +266,12 @@ namespace CheqsApp.Migrations
 
             migrationBuilder.DropTable(
                 name: "Types");
+
+            migrationBuilder.DropTable(
+                name: "BankBusinesses");
+
+            migrationBuilder.DropTable(
+                name: "Banks");
 
             migrationBuilder.DropTable(
                 name: "Businesses");

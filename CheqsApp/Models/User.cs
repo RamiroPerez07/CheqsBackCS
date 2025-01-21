@@ -32,8 +32,9 @@ namespace CheqsApp.Models
 
         public bool IsActive { get; set; } = true;
 
-        // Relación con BusinessUser (empresas que un usuario ve)
-        public ICollection<BusinessUser> BusinessUsers { get; set; } = new List<BusinessUser>();
+        // Relación con BankBusinessUser
+        public ICollection<BankBusinessUser> BankBusinessUsers { get; set; } = new List<BankBusinessUser>();
+
 
         // Relación con los negocios creados por el usuario
         public ICollection<Business> CreatedBusinesses { get; set; } = new List<Business>();

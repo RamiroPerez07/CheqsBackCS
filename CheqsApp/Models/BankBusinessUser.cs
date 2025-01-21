@@ -2,7 +2,7 @@
 
 namespace CheqsApp.Models
 {
-    public class BusinessUser
+    public class BankBusinessUser
     {
         [Key]
         public int Id { get; set; }
@@ -11,8 +11,8 @@ namespace CheqsApp.Models
 
         public User? User { get; set; }
 
-        public int BusinessId { get; set; }
-
-        public Business? Business { get; set; }
+        public int BankBusinessId {  get; set; }
+        
+        public BankBusiness? BankBusiness { get; set; }
     }
 }

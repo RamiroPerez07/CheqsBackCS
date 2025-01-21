@@ -127,24 +127,28 @@ namespace CheqsApp.Controllers
             return _context.Cheqs.Any(e => e.Id == id);
         }
 
+        
         [HttpGet("getCheqsWithDetails")]
         public async Task<ActionResult<IEnumerable<CheqDetail>>> GetCheqsWithDetails()
         {
             var query = from ch in _context.Cheqs
-                        join bu in _context.BusinessUser on ch.BusinessUserId equals bu.Id into businessUserGroup
-                        from bu in businessUserGroup.DefaultIfEmpty() // Left Join
-                        join u in _context.Users on bu.UserId equals u.Id into userGroup
-                        from u in userGroup.DefaultIfEmpty() // Left Join
-                        join b in _context.Businesses on bu.BusinessId equals b.Id into businessGroup
-                        from b in businessGroup.DefaultIfEmpty() // Left Join
-                        join t in _context.Types on ch.TypeId equals t.Id into typeGroup
-                        from t in typeGroup.DefaultIfEmpty() // Left Join
-                        join s in _context.States on ch.StateId equals s.Id into stateGroup
-                        from s in stateGroup.DefaultIfEmpty() // Left Join
-                        join e in _context.Entities on ch.EntityId equals e.Id into entityGroup
-                        from e in entityGroup.DefaultIfEmpty() // Left Join
-                        where b.Id == 1 // Aquí el filtro de BusinessId que deseas
-                        select new CheqDetail
+                        join bbu in _context.BankBusinessUsers on ch.BankBusinessUserId equals bbu.Id into bbuGroup
+                        from bbu in bbuGroup.DefaultIfEmpty()
+                        join u in _context.Users on bbu.UserId equals u.Id into uGroup
+                        from u in uGroup.DefaultIfEmpty()
+                        join bb in _context.BankBusinesses on bbu.BankBusinessId equals bb.Id into bbGroup
+                        from bb in bbGroup.DefaultIfEmpty()
+                        join bus in _context.Businesses on bb.BusinessId equals bus.Id into busGroup
+                        from bus in busGroup.DefaultIfEmpty()
+                        join b in _context.Banks on bb.BankId equals b.Id into bGroup
+                        from b in bGroup.DefaultIfEmpty()
+                        join t in _context.Types on ch.TypeId equals t.Id into tGroup
+                        from t in tGroup.DefaultIfEmpty()
+                        join s in _context.States on ch.StateId equals s.Id into sGroup
+                        from s in sGroup.DefaultIfEmpty()
+                        join e in _context.Entities on ch.EntityId equals e.Id into eGroup
+                        from e in eGroup.DefaultIfEmpty()
+                        select new
                         {
                             CheqId = ch.Id,
                             IssueDate = ch.IssueDate,
@@ -155,21 +159,24 @@ namespace CheqsApp.Controllers
                             UserId = u.Id,
                             Username = u.Username,
                             Email = u.Email,
-                            BusinessId = b.Id,
-                            BusinessName = b.BusinessName,
-                            Balance = b.Balance,
+                            BusinessId = bus.Id,
+                            BusinessName = bus.BusinessName,
+                            Balance = bb.Balance,
                             TypeId = t.Id,
                             TypeName = t.TypeName,
                             StateId = s.Id,
                             StateName = s.StateName,
                             EntityId = e.Id,
-                            EntityName = e.EntityName
+                            EntityName = e.EntityName,
+                            BankId = b.Id,
+                            BankName = b.BankName
                         };
 
             var result = await query.ToListAsync();
 
             return Ok(result);
         }
+        
 
         public class ChangeCheqsStateRequest
         {

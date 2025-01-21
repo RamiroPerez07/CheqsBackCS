@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CheqsApp.Migrations
 {
     [DbContext(typeof(AppDBContext))]
-    [Migration("20250120224458_Initial")]
+    [Migration("20250121122938_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -25,7 +25,24 @@ namespace CheqsApp.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("CheqsApp.Models.Business", b =>
+            modelBuilder.Entity("CheqsApp.Models.Bank", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("BankName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Banks");
+                });
+
+            modelBuilder.Entity("CheqsApp.Models.BankBusiness", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -35,6 +52,55 @@ namespace CheqsApp.Migrations
 
                     b.Property<decimal>("Balance")
                         .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("BankId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("BusinessId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BankId");
+
+                    b.HasIndex("BusinessId");
+
+                    b.ToTable("BankBusinesses");
+                });
+
+            modelBuilder.Entity("CheqsApp.Models.BankBusinessUser", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("BankBusinessId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BankBusinessId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("BankBusinessUsers");
+                });
+
+            modelBuilder.Entity("CheqsApp.Models.Business", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("BusinessName")
                         .IsRequired()
@@ -56,29 +122,6 @@ namespace CheqsApp.Migrations
                     b.ToTable("Businesses");
                 });
 
-            modelBuilder.Entity("CheqsApp.Models.BusinessUser", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("BusinessId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("BusinessId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("BusinessUser");
-                });
-
             modelBuilder.Entity("CheqsApp.Models.Cheq", b =>
                 {
                     b.Property<int>("Id")
@@ -90,7 +133,7 @@ namespace CheqsApp.Migrations
                     b.Property<decimal>("Amount")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int>("BusinessUserId")
+                    b.Property<int>("BankBusinessUserId")
                         .HasColumnType("int");
 
                     b.Property<string>("CheqNumber")
@@ -117,7 +160,7 @@ namespace CheqsApp.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BusinessUserId");
+                    b.HasIndex("BankBusinessUserId");
 
                     b.HasIndex("EntityId");
 
@@ -216,6 +259,44 @@ namespace CheqsApp.Migrations
                     b.ToTable("Users");
                 });
 
+            modelBuilder.Entity("CheqsApp.Models.BankBusiness", b =>
+                {
+                    b.HasOne("CheqsApp.Models.Bank", "Bank")
+                        .WithMany("BankBusinesses")
+                        .HasForeignKey("BankId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("CheqsApp.Models.Business", "Business")
+                        .WithMany("BankBusinesses")
+                        .HasForeignKey("BusinessId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Bank");
+
+                    b.Navigation("Business");
+                });
+
+            modelBuilder.Entity("CheqsApp.Models.BankBusinessUser", b =>
+                {
+                    b.HasOne("CheqsApp.Models.BankBusiness", "BankBusiness")
+                        .WithMany("BankBusinessUsers")
+                        .HasForeignKey("BankBusinessId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("CheqsApp.Models.User", "User")
+                        .WithMany("BankBusinessUsers")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("BankBusiness");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("CheqsApp.Models.Business", b =>
                 {
                     b.HasOne("CheqsApp.Models.User", "User")
@@ -227,30 +308,11 @@ namespace CheqsApp.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("CheqsApp.Models.BusinessUser", b =>
-                {
-                    b.HasOne("CheqsApp.Models.Business", "Business")
-                        .WithMany("BusinessUsers")
-                        .HasForeignKey("BusinessId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("CheqsApp.Models.User", "User")
-                        .WithMany("BusinessUsers")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Business");
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("CheqsApp.Models.Cheq", b =>
                 {
-                    b.HasOne("CheqsApp.Models.BusinessUser", "BusinessUser")
+                    b.HasOne("CheqsApp.Models.BankBusinessUser", "BankBusinessUser")
                         .WithMany()
-                        .HasForeignKey("BusinessUserId")
+                        .HasForeignKey("BankBusinessUserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -272,7 +334,7 @@ namespace CheqsApp.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("BusinessUser");
+                    b.Navigation("BankBusinessUser");
 
                     b.Navigation("Entity");
 
@@ -281,9 +343,19 @@ namespace CheqsApp.Migrations
                     b.Navigation("Type");
                 });
 
+            modelBuilder.Entity("CheqsApp.Models.Bank", b =>
+                {
+                    b.Navigation("BankBusinesses");
+                });
+
+            modelBuilder.Entity("CheqsApp.Models.BankBusiness", b =>
+                {
+                    b.Navigation("BankBusinessUsers");
+                });
+
             modelBuilder.Entity("CheqsApp.Models.Business", b =>
                 {
-                    b.Navigation("BusinessUsers");
+                    b.Navigation("BankBusinesses");
                 });
 
             modelBuilder.Entity("CheqsApp.Models.Entity", b =>
@@ -303,7 +375,7 @@ namespace CheqsApp.Migrations
 
             modelBuilder.Entity("CheqsApp.Models.User", b =>
                 {
-                    b.Navigation("BusinessUsers");
+                    b.Navigation("BankBusinessUsers");
 
                     b.Navigation("CreatedBusinesses");
                 });
