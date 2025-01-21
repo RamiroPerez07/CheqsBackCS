@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\C.RAMPE\\OneDrive - Ternium\\Escritorio\\ASSETS\\CheqsBackCS\\CheqsApp\\CheqsApp.csproj": {}
+    "C:\\Users\\HP\\Desktop\\Cheques\\Backend\\CheqsApp\\CheqsApp\\CheqsApp.csproj": {}
   },
   "projects": {
-    "C:\\Users\\C.RAMPE\\OneDrive - Ternium\\Escritorio\\ASSETS\\CheqsBackCS\\CheqsApp\\CheqsApp.csproj": {
+    "C:\\Users\\HP\\Desktop\\Cheques\\Backend\\CheqsApp\\CheqsApp\\CheqsApp.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\C.RAMPE\\OneDrive - Ternium\\Escritorio\\ASSETS\\CheqsBackCS\\CheqsApp\\CheqsApp.csproj",
+        "projectUniqueName": "C:\\Users\\HP\\Desktop\\Cheques\\Backend\\CheqsApp\\CheqsApp\\CheqsApp.csproj",
         "projectName": "CheqsApp",
-        "projectPath": "C:\\Users\\C.RAMPE\\OneDrive - Ternium\\Escritorio\\ASSETS\\CheqsBackCS\\CheqsApp\\CheqsApp.csproj",
-        "packagesPath": "C:\\Users\\C.RAMPE\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\C.RAMPE\\OneDrive - Ternium\\Escritorio\\ASSETS\\CheqsBackCS\\CheqsApp\\obj\\",
+        "projectPath": "C:\\Users\\HP\\Desktop\\Cheques\\Backend\\CheqsApp\\CheqsApp\\CheqsApp.csproj",
+        "packagesPath": "C:\\Users\\HP\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\HP\\Desktop\\Cheques\\Backend\\CheqsApp\\CheqsApp\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\C.RAMPE\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\HP\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -92,7 +92,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.403/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.303/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

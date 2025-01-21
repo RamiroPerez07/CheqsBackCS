@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CheqsApp.Migrations
 {
     [DbContext(typeof(AppDBContext))]
-    [Migration("20250120143215_Initial")]
+    [Migration("20250120224458_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
