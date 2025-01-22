@@ -3,8 +3,8 @@
   "WorkspaceRootPath": "C:\\Users\\C.RAMPE\\OneDrive - Ternium\\Escritorio\\ASSETS\\CheqsBackCS\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{1EE01DC2-1E90-48FC-82FF-4DE35D99FE6B}|CheqsApp\\CheqsApp.csproj|c:\\users\\c.rampe\\onedrive - ternium\\escritorio\\assets\\cheqsbackcs\\cheqsapp\\controllers\\cheqscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1EE01DC2-1E90-48FC-82FF-4DE35D99FE6B}|CheqsApp\\CheqsApp.csproj|solutionrelative:cheqsapp\\controllers\\cheqscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{1EE01DC2-1E90-48FC-82FF-4DE35D99FE6B}|CheqsApp\\CheqsApp.csproj|c:\\users\\c.rampe\\onedrive - ternium\\escritorio\\assets\\cheqsbackcs\\cheqsapp\\controllers\\bankbusinessescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1EE01DC2-1E90-48FC-82FF-4DE35D99FE6B}|CheqsApp\\CheqsApp.csproj|solutionrelative:cheqsapp\\controllers\\bankbusinessescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -19,14 +19,14 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "CheqsController.cs",
-              "DocumentMoniker": "C:\\Users\\C.RAMPE\\OneDrive - Ternium\\Escritorio\\ASSETS\\CheqsBackCS\\CheqsApp\\Controllers\\CheqsController.cs",
-              "RelativeDocumentMoniker": "CheqsApp\\Controllers\\CheqsController.cs",
-              "ToolTip": "C:\\Users\\C.RAMPE\\OneDrive - Ternium\\Escritorio\\ASSETS\\CheqsBackCS\\CheqsApp\\Controllers\\CheqsController.cs",
-              "RelativeToolTip": "CheqsApp\\Controllers\\CheqsController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAJIAAABXAAAAAAAAAA==",
+              "Title": "BankBusinessesController.cs",
+              "DocumentMoniker": "C:\\Users\\C.RAMPE\\OneDrive - Ternium\\Escritorio\\ASSETS\\CheqsBackCS\\CheqsApp\\Controllers\\BankBusinessesController.cs",
+              "RelativeDocumentMoniker": "CheqsApp\\Controllers\\BankBusinessesController.cs",
+              "ToolTip": "C:\\Users\\C.RAMPE\\OneDrive - Ternium\\Escritorio\\ASSETS\\CheqsBackCS\\CheqsApp\\Controllers\\BankBusinessesController.cs",
+              "RelativeToolTip": "CheqsApp\\Controllers\\BankBusinessesController.cs",
+              "ViewState": "AgIAAGoAAAAAAAAAAAAwwIcAAAAcAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-01-21T19:41:55.825Z",
+              "WhenOpened": "2025-01-22T18:04:22.436Z",
               "EditorCaption": ""
             }
           ]

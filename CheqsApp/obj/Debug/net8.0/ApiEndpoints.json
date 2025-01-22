@@ -48,6 +48,276 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "CheqsApp.Controllers.BankBusinessesController",
+    "Method": "GetBankBusinesses",
+    "RelativePath": "api/BankBusinesses",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[CheqsApp.Models.BankBusiness, CheqsApp, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "CheqsApp.Controllers.BankBusinessesController",
+    "Method": "PostBankBusiness",
+    "RelativePath": "api/BankBusinesses",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "bankBusiness",
+        "Type": "CheqsApp.Models.BankBusiness",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "CheqsApp.Models.BankBusiness",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "CheqsApp.Controllers.BankBusinessesController",
+    "Method": "GetBankBusiness",
+    "RelativePath": "api/BankBusinesses/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "CheqsApp.Models.BankBusiness",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "CheqsApp.Controllers.BankBusinessesController",
+    "Method": "PutBankBusiness",
+    "RelativePath": "api/BankBusinesses/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "bankBusiness",
+        "Type": "CheqsApp.Models.BankBusiness",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "CheqsApp.Controllers.BankBusinessesController",
+    "Method": "DeleteBankBusiness",
+    "RelativePath": "api/BankBusinesses/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "CheqsApp.Controllers.BankBusinessesController",
+    "Method": "GetBankBusinesses",
+    "RelativePath": "api/BankBusinesses/balance-by-bank-and-business",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "CheqsApp.DTO.BankBusinessBalanceReqDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "CheqsApp.DTO.BankBusinessBalanceDTO",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "CheqsApp.Controllers.BankBusinessUsersController",
+    "Method": "GetBankBusinessUsers",
+    "RelativePath": "api/BankBusinessUsers",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[CheqsApp.Models.BankBusinessUser, CheqsApp, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "CheqsApp.Controllers.BankBusinessUsersController",
+    "Method": "PostBankBusinessUser",
+    "RelativePath": "api/BankBusinessUsers",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "bankBusinessUser",
+        "Type": "CheqsApp.Models.BankBusinessUser",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "CheqsApp.Models.BankBusinessUser",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "CheqsApp.Controllers.BankBusinessUsersController",
+    "Method": "GetBankBusinessUser",
+    "RelativePath": "api/BankBusinessUsers/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "CheqsApp.Models.BankBusinessUser",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "CheqsApp.Controllers.BankBusinessUsersController",
+    "Method": "PutBankBusinessUser",
+    "RelativePath": "api/BankBusinessUsers/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "bankBusinessUser",
+        "Type": "CheqsApp.Models.BankBusinessUser",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "CheqsApp.Controllers.BankBusinessUsersController",
+    "Method": "DeleteBankBusinessUser",
+    "RelativePath": "api/BankBusinessUsers/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "CheqsApp.Controllers.BankBusinessUsersController",
+    "Method": "GetBankBusinessUserId",
+    "RelativePath": "api/BankBusinessUsers/by-user-business-bank",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "CheqsApp.DTO.BankBusinessRequestDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Int32",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
     "ContainingType": "CheqsApp.Controllers.BanksController",
     "Method": "GetBanks",
     "RelativePath": "api/Banks",
@@ -471,11 +741,6 @@
     "IsController": true,
     "Order": 0,
     "Parameters": [
-      {
-        "Name": "userId",
-        "Type": "System.Int32",
-        "IsRequired": false
-      },
       {
         "Name": "bankId",
         "Type": "System.Int32",
