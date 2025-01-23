@@ -135,5 +135,45 @@ namespace CheqsApp.Controllers
 
             return Ok(result);
         }
+
+        // PUT: api/BankBusinesses/update-balance
+        [HttpPut("update-balance")]
+        public async Task<IActionResult> UpdateBankBusinessBalance([FromBody] UpdateBankBusinessBalanceDTO request)
+        {
+            if (request == null)
+            {
+                return BadRequest("Invalid request.");
+            }
+
+            var bankBusiness = await _context.BankBusinesses
+                .Where(bb => bb.BankId == request.BankId && bb.BusinessId == request.BusinessId)
+                .FirstOrDefaultAsync();
+
+            if (bankBusiness == null)
+            {
+                return NotFound("No records found for the given bank and business.");
+            }
+
+            Console.WriteLine("###############################################################");
+            Console.WriteLine("MI FECHA ES ",request.UpdatedAt);
+
+            // Actualizar los valores
+            bankBusiness.Balance = request.Balance;
+            bankBusiness.UpdatedAt = request.UpdatedAt;
+
+            try
+            {
+                // Guardar los cambios
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                // Manejo de errores
+                return StatusCode(StatusCodes.Status500InternalServerError, "Error updating balance: " + ex.Message);
+            }
+
+            return Ok(bankBusiness); // Retorna el objeto actualizado como respuesta
+        }
+
     }
 }

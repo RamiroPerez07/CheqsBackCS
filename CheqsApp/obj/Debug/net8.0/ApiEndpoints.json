@@ -183,6 +183,22 @@
     ]
   },
   {
+    "ContainingType": "CheqsApp.Controllers.BankBusinessesController",
+    "Method": "UpdateBankBusinessBalance",
+    "RelativePath": "api/BankBusinesses/update-balance",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "CheqsApp.DTO.UpdateBankBusinessBalanceDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "CheqsApp.Controllers.BankBusinessUsersController",
     "Method": "GetBankBusinessUsers",
     "RelativePath": "api/BankBusinessUsers",
