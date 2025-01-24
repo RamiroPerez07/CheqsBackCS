@@ -113,7 +113,8 @@ namespace CheqsApp.Migrations
                     BankId = table.Column<int>(type: "int", nullable: false),
                     BusinessId = table.Column<int>(type: "int", nullable: false),
                     Balance = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UserId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -128,6 +129,12 @@ namespace CheqsApp.Migrations
                         name: "FK_BankBusinesses_Businesses_BusinessId",
                         column: x => x.BusinessId,
                         principalTable: "Businesses",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_BankBusinesses_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -212,6 +219,11 @@ namespace CheqsApp.Migrations
                 name: "IX_BankBusinesses_BusinessId",
                 table: "BankBusinesses",
                 column: "BusinessId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_BankBusinesses_UserId",
+                table: "BankBusinesses",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_BankBusinessUsers_BankBusinessId",

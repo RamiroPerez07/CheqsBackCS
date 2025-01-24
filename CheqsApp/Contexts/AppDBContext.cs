@@ -36,7 +36,14 @@ namespace CheqsApp.Contexts
                 .HasOne(b => b.User)  // Relación con el User (quién creó el negocio)
                 .WithMany(u => u.CreatedBusinesses)  
                 .HasForeignKey(b => b.UserId)
-                .OnDelete(DeleteBehavior.Restrict);  
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // Configuración de la relación entre User y BankBusiness
+            modelBuilder.Entity<BankBusiness>()
+                .HasOne(b => b.User)  // Relación con el User (quién actualizó el saldo)
+                .WithMany(u => u.BankBusinesses)
+                .HasForeignKey(b => b.UserId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             // Configuración de la relación entre Business y BusinessUser
             modelBuilder.Entity<BankBusiness>()

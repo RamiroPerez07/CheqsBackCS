@@ -115,11 +115,25 @@ namespace CheqsApp.Controllers
                 return BadRequest("Invalid request.");
             }
 
+            var BankId = request.BankId;
+
+            var BusinessId = request.BusinessId;
+
             var bankBusiness = await _context.BankBusinesses
-                .Where(bb => bb.BankId == request.BankId && bb.BusinessId == request.BusinessId)  // Filtro por BankId y BusinessId
-                .OrderByDescending(bb => bb.UpdatedAt)  // Ordenamos por la fecha más reciente
-                .Select(bb => new { bb.Balance, bb.UpdatedAt })  // Seleccionamos Balance y UpdatedAt
-                .FirstOrDefaultAsync();  // Obtenemos el primer resultado (el más reciente)
+                                                .Where(bb => bb.BankId == BankId && bb.BusinessId == BusinessId)
+                                                .OrderByDescending(bb => bb.UpdatedAt)
+                                                .Join(
+                                                    _context.Users,
+                                                    bb => bb.UserId,
+                                                    u => u.Id,
+                                                    (bb, u) => new
+                                                    {
+                                                        bb.Balance,
+                                                        bb.UpdatedAt,
+                                                        u.Username,
+                                                        UserId = u.Id
+                                                    })
+                                                .FirstOrDefaultAsync();
 
             if (bankBusiness == null)
             {
@@ -130,7 +144,9 @@ namespace CheqsApp.Controllers
             var result = new BankBusinessBalanceDTO
             {
                 Balance = bankBusiness.Balance,
-                UpdatedAt = bankBusiness.UpdatedAt
+                UpdatedAt = bankBusiness.UpdatedAt,
+                Username = bankBusiness.Username,
+                UserId = bankBusiness.UserId,
             };
 
             return Ok(result);
@@ -154,12 +170,16 @@ namespace CheqsApp.Controllers
                 return NotFound("No records found for the given bank and business.");
             }
 
-            Console.WriteLine("###############################################################");
-            Console.WriteLine("MI FECHA ES ",request.UpdatedAt);
+            // Convertimos la fecha recibida (en UTC) a la hora de Buenos Aires
+            var buenosAiresTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Argentina Standard Time");
+            var localDate = TimeZoneInfo.ConvertTimeFromUtc(request.UpdatedAt, buenosAiresTimeZone);
+
+
 
             // Actualizar los valores
             bankBusiness.Balance = request.Balance;
-            bankBusiness.UpdatedAt = request.UpdatedAt;
+            bankBusiness.UpdatedAt = localDate;
+            bankBusiness.UserId = request.UserId;
 
             try
             {

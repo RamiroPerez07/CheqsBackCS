@@ -59,11 +59,16 @@ namespace CheqsApp.Migrations
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("BankId");
 
                     b.HasIndex("BusinessId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("BankBusinesses");
                 });
@@ -270,9 +275,17 @@ namespace CheqsApp.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("CheqsApp.Models.User", "User")
+                        .WithMany("BankBusinesses")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.Navigation("Bank");
 
                     b.Navigation("Business");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("CheqsApp.Models.BankBusinessUser", b =>
@@ -373,6 +386,8 @@ namespace CheqsApp.Migrations
             modelBuilder.Entity("CheqsApp.Models.User", b =>
                 {
                     b.Navigation("BankBusinessUsers");
+
+                    b.Navigation("BankBusinesses");
 
                     b.Navigation("CreatedBusinesses");
                 });

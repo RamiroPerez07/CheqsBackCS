@@ -28,9 +28,12 @@ namespace CheqsApp.Models
 
         public DateTime CreatedAt { get; set; } = DateTime.Now;
 
-        public DateTime? UpdatedAt { get; set; }
+        public DateTime? UpdatedAt { get; set; } = DateTime.Now;
 
         public bool IsActive { get; set; } = true;
+
+        // Relación con BankBusiness para la actualizacion de saldo
+        public ICollection<BankBusiness> BankBusinesses { get; set; } = new List<BankBusiness>();
 
         // Relación con BankBusinessUser
         public ICollection<BankBusinessUser> BankBusinessUsers { get; set; } = new List<BankBusinessUser>();

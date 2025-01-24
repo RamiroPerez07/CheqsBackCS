@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using CheqsApp.Contexts;
 using CheqsApp.Models;
 using CheqsApp.DTO;
+using Azure.Core;
 
 namespace CheqsApp.Controllers
 {
@@ -79,6 +80,14 @@ namespace CheqsApp.Controllers
         [HttpPost]
         public async Task<ActionResult<Cheq>> PostCheq(Cheq cheq)
         {
+            // Convertimos la fecha recibida (en UTC) a la hora de Buenos Aires
+            var buenosAiresTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Argentina Standard Time");
+            cheq.IssueDate = TimeZoneInfo.ConvertTimeFromUtc(cheq.IssueDate, buenosAiresTimeZone);
+            cheq.DueDate = TimeZoneInfo.ConvertTimeFromUtc(cheq.DueDate, buenosAiresTimeZone);
+            cheq.CreatedAt = TimeZoneInfo.ConvertTimeFromUtc(cheq.CreatedAt, buenosAiresTimeZone);
+
+
+
             _context.Cheqs.Add(cheq);
             await _context.SaveChangesAsync();
 
