@@ -9,10 +9,10 @@ namespace CheqsApp.Models
 
         public int UserId { get; set; }
 
-        public User? User { get; set; }
+        public required User User { get; set; }
 
         public int BankBusinessId {  get; set; }
         
-        public BankBusiness? BankBusiness { get; set; }
+        public required BankBusiness BankBusiness { get; set; }
     }
 }

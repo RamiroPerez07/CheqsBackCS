@@ -118,7 +118,9 @@ namespace CheqsApp.Controllers
                                     select new BusinessesByUserDTO
                                     {
                                         BusinessId = bus.Id,
-                                        BusinessName = bus.BusinessName
+                                        BusinessName = bus.BusinessName,
+                                        CreatedAt = bus.CreatedAt,
+                                        LastUpdatedAt = bus.LastUpdatedAt
                                     })
                         .GroupBy(b => b.BusinessId) // Agrupar por BusinessId
                         .Select(g => g.First())      // Seleccionar solo el primer resultado de cada grupo
@@ -133,7 +135,60 @@ namespace CheqsApp.Controllers
         }
 
 
-     
+        [HttpPost("getBusinessDetailByUserId")]
+        public async Task<ActionResult<BusinessDetailWithBanksAndUsersDTO>> GetBusinessDetailByUserId([FromBody] int reqUserId)
+        {
+            // Consulta para obtener los negocios creados por el usuario con el ID especificado
+            var businessDetail = await _context.Businesses
+                .Where(b => b.UserId == reqUserId)  // Filtramos los negocios donde el UserId coincida con el creador
+                .Select(b => new
+                {
+                    Business = b,  // Accedemos directamente a la entidad Business
+                    Banks = b.BankBusinesses.Select(bb => new
+                    {
+                        Bank = bb.Bank,  // Accedemos directamente a la entidad Bank
+                        Users = bb.BankBusinessUsers.Select(bbu => new
+                        {
+                            User = bbu.User  // Accedemos directamente a la entidad User
+                        }).ToList()
+                    }).ToList()
+                })
+                .ToListAsync();
+
+            // Si no encontramos detalles para el usuario, retornamos NotFound
+            if (businessDetail == null || businessDetail.Count == 0)
+            {
+                return NotFound("No se encontró información para el usuario dado.");
+            }
+
+            // Ahora estructuramos el resultado para que se ajuste al formato esperado
+            var result = businessDetail.Select(item => new BusinessDetailWithBanksAndUsersDTO
+            {
+                Business = new BusinessSimpleDTO
+                {
+                    BusinessId = item.Business.Id,
+                    BusinessName = item.Business.BusinessName,
+                    CreatedAt = item.Business.CreatedAt,
+                    LastUpdatedAt = item.Business.LastUpdatedAt
+                },
+                Banks = item.Banks.Select(bb => new BankDetailWithUsersDTO
+                {
+                    Bank = new BanksDTO
+                    {
+                        BankId = bb.Bank.Id,
+                        BankName = bb.Bank.BankName
+                    },
+                    Users = bb.Users.Select(bbu => new UserSimpleDetailDTO
+                    {
+                        UserId = bbu.User.Id,
+                        Username = bbu.User.Username,
+                        Email = bbu.User.Email
+                    }).ToList()
+                }).ToList()
+            }).ToList();
+
+            return Ok(result);
+        }
 
     }
 }

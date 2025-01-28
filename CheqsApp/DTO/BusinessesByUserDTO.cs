@@ -9,5 +9,12 @@ namespace CheqsApp.DTO
 
         [Required]
         public string BusinessName { set; get; } = string.Empty;
+
+        [Required]
+        public DateTime CreatedAt { get; set; }
+
+        public DateTime? LastUpdatedAt { get; set; } = DateTime.Now;
+
+
     }
 }

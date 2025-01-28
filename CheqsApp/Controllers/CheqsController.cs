@@ -9,6 +9,7 @@ using CheqsApp.Contexts;
 using CheqsApp.Models;
 using CheqsApp.DTO;
 using Azure.Core;
+using Mono.TextTemplating;
 
 namespace CheqsApp.Controllers
 {
@@ -78,8 +79,20 @@ namespace CheqsApp.Controllers
         // POST: api/Cheqs
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Cheq>> PostCheq(Cheq cheq)
+        public async Task<ActionResult<Cheq>> PostCheq(CreateCheqDTO cheq)
         {
+            // Recuperamos las entidades correspondientes desde la base de datos
+            var entity = await _context.Entities.FindAsync(cheq.EntityId);
+            var type = await _context.Types.FindAsync(cheq.TypeId);
+            var state = await _context.States.FindAsync(cheq.StateId);
+            var bankBusinessUser = await _context.BankBusinessUsers.FindAsync(cheq.BankBusinessUserId);
+
+            // Verificamos que todas las entidades existan
+            if (entity == null || type == null || state == null || bankBusinessUser == null)
+            {
+                return NotFound("Una o más entidades no fueron encontradas.");
+            }
+
             // Convertimos la fecha recibida (en UTC) a la hora de Buenos Aires
             var buenosAiresTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Argentina Standard Time");
             cheq.IssueDate = TimeZoneInfo.ConvertTimeFromUtc(cheq.IssueDate, buenosAiresTimeZone);
@@ -87,8 +100,25 @@ namespace CheqsApp.Controllers
             cheq.CreatedAt = TimeZoneInfo.ConvertTimeFromUtc(cheq.CreatedAt, buenosAiresTimeZone);
 
 
+            var newCheq = new Cheq
+            {
+                Amount = cheq.Amount,
+                BankBusinessUserId = cheq.BankBusinessUserId,
+                CheqNumber = cheq.CheqNumber,
+                DueDate = cheq.DueDate,
+                CreatedAt = cheq.CreatedAt,
+                IssueDate = cheq.IssueDate,
+                EntityId = cheq.EntityId,
+                TypeId = cheq.TypeId,
+                StateId = cheq.StateId,
+                Entity = entity,
+                State = state,
+                Type = type,
+                BankBusinessUser = bankBusinessUser
+            };
 
-            _context.Cheqs.Add(cheq);
+
+            _context.Cheqs.Add(newCheq);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetCheq", new { id = cheq.Id }, cheq);

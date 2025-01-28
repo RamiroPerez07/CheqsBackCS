@@ -609,6 +609,32 @@
     ]
   },
   {
+    "ContainingType": "CheqsApp.Controllers.BusinessesController",
+    "Method": "GetBusinessDetailByUserId",
+    "RelativePath": "api/Businesses/getBusinessDetailByUserId",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "reqUserId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "CheqsApp.DTO.BusinessDetailWithBanksAndUsersDTO",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
     "ContainingType": "CheqsApp.Controllers.CheqsController",
     "Method": "GetCheqs",
     "RelativePath": "api/Cheqs",
@@ -638,7 +664,7 @@
     "Parameters": [
       {
         "Name": "cheq",
-        "Type": "CheqsApp.Models.Cheq",
+        "Type": "CheqsApp.DTO.CreateCheqDTO",
         "IsRequired": true
       }
     ],

@@ -10,10 +10,10 @@ namespace CheqsApp.Models
 
         public int BankId { get; set; }
 
-        public Bank? Bank { get; set; }
+        public required Bank Bank { get; set; }
 
         public int BusinessId {get; set; }
-        public Business? Business { get; set; }
+        public required Business Business { get; set; }
 
         [Column(TypeName = "decimal(18,2)")]
         public decimal Balance { get; set; }
@@ -22,7 +22,7 @@ namespace CheqsApp.Models
         //Actualizado por
         public int UserId { get; set; }
 
-        public User? User { get; set; }
+        public required User User { get; set; }
 
         public ICollection<BankBusinessUser> BankBusinessUsers { get; set; } = new List<BankBusinessUser>();
     }

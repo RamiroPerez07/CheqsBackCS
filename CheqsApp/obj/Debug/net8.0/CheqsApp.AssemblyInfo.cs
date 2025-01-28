@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("CheqsApp")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+157f8974867853e62c17ec3218cfab0dd2bedab2")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d817440e1dc176dc135fc4408f897ec4e1818999")]
 [assembly: System.Reflection.AssemblyProductAttribute("CheqsApp")]
 [assembly: System.Reflection.AssemblyTitleAttribute("CheqsApp")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
