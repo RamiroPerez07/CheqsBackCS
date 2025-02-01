@@ -147,6 +147,7 @@ namespace CheqsApp.Controllers
                     Banks = b.BankBusinesses.Select(bb => new
                     {
                         Bank = bb.Bank,  // Accedemos directamente a la entidad Bank
+                        Balance = bb.Balance,
                         Users = bb.BankBusinessUsers.Select(bbu => new
                         {
                             User = bbu.User  // Accedemos directamente a la entidad User
@@ -178,6 +179,7 @@ namespace CheqsApp.Controllers
                         BankId = bb.Bank.Id,
                         BankName = bb.Bank.BankName
                     },
+                    Balance = bb.Balance,
                     Users = bb.Users.Select(bbu => new UserSimpleDetailDTO
                     {
                         UserId = bbu.User.Id,
